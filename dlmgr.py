@@ -145,7 +145,7 @@ def run():
         for m in v.movies.aggregate(
             [
                 {"$match": "files": {"$exists": False}}},
-                {"$sample": {"size": 5}},
+                {"$sample": {"size": 1}},
             ]
         ):
             _id = m["_id"]
@@ -156,14 +156,11 @@ def run():
             if h is None:
                 continue
 
+            logging.info(f"{_id}/{m['slug']}: adding to aria2")
+            aria2_add(_id, h)
+
         if count > v.MAX_CON:
             logging.info(f"{count} downloads in queue. sleeping")
             time.sleep(30)
-
-        h = get_hash(m)
-        if h is None:
-            continue
-        logging.info(f"{_id}/{m['slug']}: adding to aria2")
-        aria2_add(_id, h)
 
       
