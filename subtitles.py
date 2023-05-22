@@ -5,6 +5,7 @@ from langcodes import *
 import json, os
 import time, subprocess
 import logging
+import pysubs2
 
 
 class Vars:
@@ -98,6 +99,20 @@ def find_subtitles(imdb_id):
         subs.append((lang, url))
     return subs
 
+
+def make_srt(sub: str):
+    # Force Unicode
+    dammit = UnicodeDammit(sub)
+    sub = dammit.unicode_markup
+
+    try:
+        sub = pysubs2.SSAFile.from_string(sub)
+        return sub.to_string("srt")
+    except Exception as e:
+        logging.warn(f"got error for subtitle: {e}")
+        return None
+
+    
 def download_subtitle(lang, url):
     logging.debug(f"downloading subtitle {lang} from {url}")
     try:
@@ -111,16 +126,9 @@ def download_subtitle(lang, url):
 
     d = z.infolist()
     assert len(d) == 1
-    if not d[0].filename.endswith("srt"):
-        # TODO: download other formats?
-        logging.info(f"dropping: {d[0].filename}")
-        return None
 
     with z.open(d[0]) as f:
-        # Force Unicode
-        dammit = UnicodeDammit(f.read())
-        ubuf = dammit.unicode_markup
-        return ubuf
+        return make_srt(f.read())
 
 
 def download(id: int):
@@ -140,6 +148,7 @@ def download(id: int):
         sub = download_subtitle(lang, url)
 
         if sub is None:
+            logging.info(f"{id}/{slug}: failed to download subtitle {lang}")
             continue
         fname = f"{slug}.{lang}.srt"  # TODO: support other formats?
         with open(os.path.join(v.DL_DIR, fname), "w") as f:
