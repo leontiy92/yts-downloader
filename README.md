@@ -9,20 +9,37 @@ git clone https://github.com/leontiy92/yts-downloader
 - Install MongoDB
 - Install [aria2](https://aria2.github.io/)
 - Run aria2 with the supplied configuration file (edit as needed):
-```aria2c --conf-path=aria2.conf```
+```
+aria2c --conf-path=aria2.conf
+```
 - Install Python modules:
-```pip install -r requirements.txt```
-- Run `python3 update-yts.py` to load YTS data to database
+```
+pip install -r requirements.txt
+```
+- Run 
+```
+python3 update-yts.py
+```
+to load YTS data to database
 - Run:
-```python3 downloader.py```
+```
+python3 downloader.py
+```
 
 You can check the log (downloader.log) for progress.
 
 You can supply a configuration file or modify parameters from command line
-`python3 downloader.py --help`
+```
+python3 downloader.py --help
+```
 
 PS: you can install:
-`pip install aria2p[tui]`
+```
+pip install aria2p[tui]
+```
 
 and then run:
-`aria2p` to see progress
+```
+aria2p
+```
+to see progress
