@@ -10,6 +10,7 @@ How to use:
 `aria2c --conf-path=aria2.conf`
 - Install Python modules:
 `pip install -r requirements.txt`
+- Run `python3 update-yts.py` to load YTS data to database
 - Run:
 `python3 downloader.py`
 
