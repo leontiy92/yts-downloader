@@ -18,3 +18,9 @@ You can check the log (downloader.log) for progress.
 
 You can supply a configuration file or modify parameters from command line
 `python3 downloader.py --help`
+
+PS: you can install:
+`pip install aria2p[tui]`
+
+and then run:
+`aria2p` to see progress
