@@ -25,7 +25,7 @@ options = p.parse_args()
 
 level = options.log_level
 if isinstance(level, str):
-    level = getattr(logging, level.upper())
+  level = getattr(logging, level.upper())
 
 logging.basicConfig(filename=options.log_file, level=level)
 
