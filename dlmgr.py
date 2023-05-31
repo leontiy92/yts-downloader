@@ -140,6 +140,8 @@ def get_hash(m):
 
 
 def run():
+    os.makedirs(v.TEMP_DIR, exist_ok = True)
+    os.makedirs(v.DL_DIR, exist_ok= True)
     while True:
         count, complete, active = scan_aria()
         for m in v.movies.aggregate(
