@@ -107,7 +107,11 @@ def handle_complete(id, dir):
                 fname = os.path.join(root, file)
                 new_path = os.path.join(v.DL_DIR, f"{slug}.mp4")
 
-                Path(fname).rename(new_path)
+                try:
+                    Path(fname).rename(new_path)
+                except FileNotFoundError as e:
+                    logging.info(f"{id}/{dir}: rename error: {e}")
+           
                 found = True
                 logging.info(f"Done {slug}.mp4")
                 break
